@@ -2,10 +2,19 @@
 
 import csv
 from dbfpy import dbf
-import os
+from os import rename
 import sys
+from glob import glob
 
 filename = sys.argv[1]
+
+listdb = glob('%s.*' % filename)
+
+for dbFile in listdb:
+    rename(dbFile, dbFile.lower())
+
+filename = '%s.dbf' % filename.lower()
+
 if filename.endswith('.dbf'):
     print "Converting %s to csv" % filename
     csv_fn = filename[:-4]+ ".csv"
